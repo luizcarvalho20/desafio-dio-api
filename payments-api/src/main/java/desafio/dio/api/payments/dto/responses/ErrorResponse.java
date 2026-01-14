@@ -1,4 +1,4 @@
-package desafio.dio.api.payments.dto.response;
+package desafio.dio.api.payments.dto.responses;
 
 import java.time.OffsetDateTime;
 

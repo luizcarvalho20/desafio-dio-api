@@ -1,5 +1,6 @@
-package desafio.dio.api.payments.dto.response;
+package desafio.dio.api.payments.dto.responses;
 
+// IMPORTANTE: Adicionado o .domain abaixo
 import desafio.dio.api.payments.domain.model.Payment;
 import desafio.dio.api.payments.domain.model.PaymentMethod;
 import desafio.dio.api.payments.domain.model.PaymentStatus;

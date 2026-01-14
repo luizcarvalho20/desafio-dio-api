@@ -2,7 +2,7 @@ package desafio.dio.api.payments.service.processor.impl;
 
 import desafio.dio.api.payments.domain.model.Payment;
 import desafio.dio.api.payments.domain.model.PaymentMethod;
-import desafio.dio.api.payments.service.processor.base.BasePaymentProcessor;
+import desafio.dio.api.payments.service.processor.BasePaymentProcessor;
 import desafio.dio.api.payments.service.processor.gateway.FraudChecker;
 import desafio.dio.api.payments.service.processor.gateway.ReceiptSender;
 import org.springframework.stereotype.Component;
@@ -27,7 +27,6 @@ public class PixPaymentProcessor extends BasePaymentProcessor {
 
     @Override
     protected Payment doConfirm(Payment payment, String confirmationCode) {
-        // PIX já é confirmado no processamento
         return payment;
     }
 }

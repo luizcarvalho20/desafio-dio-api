@@ -2,7 +2,7 @@ package desafio.dio.api.payments.controller;
 
 import desafio.dio.api.payments.dto.request.ConfirmPaymentRequest;
 import desafio.dio.api.payments.dto.request.CreatePaymentRequest;
-import desafio.dio.api.payments.dto.response.PaymentResponse;
+import desafio.dio.api.payments.dto.responses.PaymentResponse;
 import desafio.dio.api.payments.service.PaymentService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +15,7 @@ public class PaymentController {
 
     private final PaymentService service;
 
+    // AQUI ESTAVA O ERRO: O tipo deve ser PaymentService service
     public PaymentController(PaymentService service) {
         this.service = service;
     }

@@ -1,8 +1,7 @@
-package desafio.dio.api.payments.service.processor.base;
+package desafio.dio.api.payments.service.processor;
 
 import desafio.dio.api.payments.domain.exception.BusinessException;
 import desafio.dio.api.payments.domain.model.Payment;
-import desafio.dio.api.payments.service.processor.PaymentProcessor;
 import desafio.dio.api.payments.service.processor.gateway.FraudChecker;
 import desafio.dio.api.payments.service.processor.gateway.ReceiptSender;
 

@@ -1,40 +1,61 @@
 package desafio.dio.api.payments.web;
 
-import desafio.dio.api.payments.dto.response.ErrorResponse;
 import desafio.dio.api.payments.domain.exception.BusinessException;
 import desafio.dio.api.payments.domain.exception.NotFoundException;
+import desafio.dio.api.payments.dto.responses.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.OffsetDateTime;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ErrorResponse> notFound(NotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(new ErrorResponse("NOT_FOUND", ex.getMessage(), OffsetDateTime.now()));
+    public ResponseEntity<ErrorResponse> handleNotFound(NotFoundException ex) {
+        ErrorResponse error = new ErrorResponse(
+                "RECURSO_NAO_ENCONTRADO",
+                ex.getMessage(),
+                OffsetDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
     @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<ErrorResponse> business(BusinessException ex) {
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
-                .body(new ErrorResponse("BUSINESS_ERROR", ex.getMessage(), OffsetDateTime.now()));
+    public ResponseEntity<ErrorResponse> handleBusiness(BusinessException ex) {
+        ErrorResponse error = new ErrorResponse(
+                "ERRO_NEGOCIO",
+                ex.getMessage(),
+                OffsetDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(error);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> validation(MethodArgumentNotValidException ex) {
-        return ResponseEntity.badRequest()
-                .body(new ErrorResponse("VALIDATION_ERROR", "Dados inválidos na requisição", OffsetDateTime.now()));
+    public ResponseEntity<ErrorResponse> handleValidation(MethodArgumentNotValidException ex) {
+        String details = ex.getBindingResult().getFieldErrors().stream()
+                .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                .collect(Collectors.joining(", "));
+
+        ErrorResponse error = new ErrorResponse(
+                "DADOS_INVALIDOS",
+                details,
+                OffsetDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> generic(Exception ex) {
-        ex.printStackTrace(); // ✅ enquanto estiver em desenvolvimento
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new ErrorResponse("INTERNAL_ERROR", "Erro inesperado", OffsetDateTime.now()));
+    public ResponseEntity<ErrorResponse> handleGeneric(Exception ex) {
+        ErrorResponse error = new ErrorResponse(
+                "ERRO_INTERNO",
+                "Ocorreu um erro inesperado no servidor.",
+                OffsetDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
 }

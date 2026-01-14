@@ -31,4 +31,9 @@ public class PaymentProcessorFactory {
         }
         return processor;
     }
+
+    public Object getProcessor(PaymentMethod pix) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getProcessor'");
+    }
 }
