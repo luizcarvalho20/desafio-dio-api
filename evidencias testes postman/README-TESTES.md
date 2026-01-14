@@ -19,4 +19,4 @@ Este diretório contém as evidências dos testes manuais realizados para valida
 ### 1. Validação no Banco H2
 * **Cenário:** Consulta direta às tabelas do banco de dados em memória.
 * **Resultado:** Os registros foram persistidos corretamente com UUIDs e timestamps.
-* **Evidência:** [03-h2-database.png](https://github.com/luizcarvalho20/desafio-dio-api/blob/master/evidencias%20testes%20postman/confirmação%20pagamento%20card.png)
+* **Evidência:** [03-h2-database.png](https://github.com/luizcarvalho20/desafio-dio-api/blob/master/evidencias%20testes%20postman/6de8f73c-bcea-4af6-b139-58bd450d26dd.png)
