@@ -1,268 +1,53 @@
-🚀 Desafio DIO — API de Pagamentos com Design Patterns (Java & Spring Boot)
+# 🚀 Desafio DIO — API de Pagamentos com Design Patterns
+Este repositório contém uma solução robusta para o Desafio de Projeto da DIO. O foco principal foi a aplicação de Design Patterns clássicos em um ecossistema Spring Boot, simulando um motor de pagamentos real com múltiplos métodos (PIX, Cartão e Boleto).
 
-Este repositório contém a solução do Desafio de Projeto da DIO, desenvolvida com foco em boas práticas de arquitetura, organização de código, Design Patterns e implementação de uma API REST realista utilizando Java e Spring Boot.
+## 🧱 Arquitetura e Estrutura
+O projeto utiliza uma estrutura multi-módulo para separar conceitos puramente teóricos de uma implementação de produção:
 
-O projeto foi estruturado para demonstrar tanto o conhecimento conceitual dos padrões de projeto quanto a aplicação prática em um cenário de negócio.
+core-patterns: Implementações puras (Java SE) de Singleton, Strategy e Facade. Ideal para estudo de fundamentos.
 
-🎯 Objetivo do Projeto
+payments-api: API REST funcional com persistência, validação e tratamento de exceções.
 
-Demonstrar domínio prático em:
+## 🧩 Design Patterns Aplicados (O Diferencial)
+Abaixo, os padrões que elevam a manutenibilidade desta API:
 
-Java moderno (Java 17)
+1. Strategy Utilizado para isolar a lógica de processamento de cada método de pagamento.
+Benefício: Facilidade para adicionar novos métodos (ex: Cripto) sem alterar o código existente (Open/Closed Principle).
 
-Maven e projetos multi-módulo
+2. Factory (Spring Managed)
+A classe PaymentProcessorFactory resolve dinamicamente qual Strategy usar.
 
-Design Patterns (GoF)
+Benefício: Elimina blocos gigantes de if/else ou switch, tornando o código limpo e extensível.
 
-Spring Boot
+3. Template Method
+Implementado na BasePaymentProcessor. Define o esqueleto do algoritmo de pagamento (Validar -> Processar -> Notificar).
 
-Arquitetura REST
+Benefício: Garante que todos os pagamentos sigam o mesmo fluxo de segurança e auditoria, evitando duplicação de código.
 
-Organização em camadas
+## 💳 Funcionalidades da API
+Recurso	Método	Endpoint	Descrição
+Criar Pagamento	POST	/api/v1/payments	Inicia um novo fluxo de pagamento.
+Consultar	GET	/api/v1/payments/{id}	Retorna os detalhes e o status atual.
+Confirmar	POST	/api/v1/payments/{id}/confirm	Finaliza pagamentos pendentes (Card/Boleto).
 
-Tratamento global de erros
+Exportar para as Planilhas
 
-Validação de dados
+## 🛠️ Tecnologias e Boas Práticas
+Tratamento de Erros: @RestControllerAdvice para respostas padronizadas em JSON.
 
-Testes manuais de API
+Imutabilidade: Uso de Records para DTOs e Value Objects.
 
-Documentação técnica clara e objetiva
+Persistência: Spring Data JPA com banco H2 (Console disponível em /h2).
 
-🧱 Estrutura do Repositório
-Desafio-dio-api-java/
-├── core-patterns/
-│   └── Exemplos de Design Patterns em Java puro
-├── payments-api/
-│   └── API REST de pagamentos com Spring Boot
-├── evidencias-postman/
-│   └── Evidências e documentação dos testes
-├── pom.xml
-└── README.md
+Clean Code: Nomes de métodos semânticos e responsabilidade única.
 
-📦 Módulos do Projeto
-🔹 core-patterns
+## 🧪 Como Testar
+Certifique-se de ter o JDK 17 instalado.
 
-Módulo dedicado ao estudo e implementação de Design Patterns clássicos (GoF) utilizando Java puro, sem frameworks.
+Clone o repositório e execute: mvn clean compile.
 
-Padrões implementados:
+Inicie a aplicação via sua IDE ou terminal: mvn spring-boot:run.
 
-Singleton
+Importe a collection do Postman disponível na pasta /evidencias-postman.
 
-Strategy
-
-Facade
-
-Cada padrão possui uma classe *Demo para execução direta e validação do comportamento no console.
-
-🔹 payments-api
-
-Módulo principal do projeto, contendo uma API REST de pagamentos, com regras de negócio reais, persistência em banco de dados e aplicação prática dos padrões de projeto.
-
-🧠 Conhecimentos Técnicos Aplicados
-✅ Java
-
-Java 17
-
-Programação Orientada a Objetos
-
-Encapsulamento e imutabilidade
-
-Uso de enum para regras de domínio
-
-UUID como identificador único
-
-✅ Maven
-
-Projeto multi-módulo
-
-Separação clara de responsabilidades
-
-Gerenciamento de dependências
-
-Build e empacotamento padronizados
-
-✅ Spring Boot
-
-Spring Boot 3.x
-
-Inversão de Controle (IoC)
-
-Injeção de Dependência
-
-Component Scan
-
-Configuração via application.yml
-
-✅ API REST
-
-Endpoints RESTful
-
-Versionamento de API (/api/v1)
-
-Uso correto de métodos HTTP:
-
-POST
-
-GET
-
-DTOs para entrada e saída de dados
-
-✅ Validação e Tratamento de Erros
-
-Bean Validation (@Valid)
-
-Validação de dados de entrada
-
-Tratamento global de exceções com @RestControllerAdvice
-
-Padronização de respostas de erro:
-
-400 — Erro de validação
-
-404 — Recurso não encontrado
-
-422 — Erro de regra de negócio
-
-500 — Erro interno
-
-✅ Persistência
-
-Spring Data JPA
-
-H2 Database (em memória)
-
-Entidades JPA (@Entity)
-
-Repositórios com JpaRepository
-
-Controle transacional com @Transactional
-
-🧩 Design Patterns Aplicados na API
-🔸 Strategy
-
-Cada método de pagamento possui sua própria estratégia:
-
-PixPaymentProcessor
-
-CardPaymentProcessor
-
-BoletoPaymentProcessor
-
-Todas implementam a interface:
-
-PaymentProcessor
-
-🔸 Factory
-
-A classe PaymentProcessorFactory é responsável por:
-
-Registrar automaticamente os processadores
-
-Retornar a estratégia correta com base no PaymentMethod
-
-Eliminar condicionais (if / switch)
-
-Centralizar a lógica de decisão
-
-🔸 Template Method
-
-A classe abstrata BasePaymentProcessor define o fluxo padrão:
-
-Marcar pagamento como PROCESSING
-
-Verificar fraude
-
-Processar pagamento
-
-Confirmar pagamento (quando aplicável)
-
-Enviar recibo
-
-Cada método de pagamento implementa apenas o comportamento específico.
-
-💳 Funcionalidades da API
-
-Criar pagamento (PIX, CARD, BOLETO)
-
-Consultar pagamento por ID
-
-Confirmar pagamento (necessário para CARD e BOLETO)
-
-PIX é confirmado automaticamente no processamento
-
-🔌 Endpoints Disponíveis
-Criar pagamento
-POST /api/v1/payments
-
-{
-  "method": "CARD",
-  "amount": 99.90
-}
-
-Consultar pagamento
-GET /api/v1/payments/{id}
-
-Confirmar pagamento
-POST /api/v1/payments/{id}/confirm
-
-{
-  "confirmationCode": "123456"
-}
-
-🗄️ Banco de Dados
-
-H2 Database em memória
-
-Ideal para desenvolvimento e testes
-
-Dados são recriados a cada inicialização
-
-Console H2 (se habilitado):
-
-http://localhost:8080/h2
-
-🧪 Testes
-
-Todos os testes da API foram realizados manualmente utilizando Postman.
-
-📁 A documentação completa dos testes está disponível em:
-
-evidencias-postman/README-TESTES.md
-
-
-Inclui:
-
-Fluxo principal
-
-Casos de erro
-
-Validações
-
-Evidências visuais
-
-Collection do Postman
-
-▶️ Como Executar
-Pré-requisitos
-
-Java 17
-
-Maven
-
-IntelliJ IDEA (recomendado)
-
-Executar a aplicação
-
-Rodar a classe:
-
-PaymentsApiApplication
-
-
-A API ficará disponível em:
-
-http://localhost:8080
-
-👤 Autor
-
-Luiz Carvalho
-Projeto desenvolvido durante o Bootcamp da DIO, com foco em aprendizado sólido, boas práticas e organização de código.
+Autor: [Luiz Carvalho](https://github.com/luizcarvalho20)
