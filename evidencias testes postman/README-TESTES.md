@@ -7,7 +7,7 @@ Este diretório contém as evidências dos testes manuais realizados para valida
 ### 1. Criação de Pagamento via PIX
 * **Cenário:** Solicitação de pagamento utilizando o método PIX.
 * **Resultado:** O sistema identificou a estratégia PIX, processou e confirmou o pagamento instantaneamente.
-* **Evidência:** `[01-criacao-pix.png](https://github.com/luizcarvalho20/desafio-dio-api/blob/master/evidencias%20testes%20postman/Criar%20um%20Novo%20Pagamento%20(PIX).png)`
+* **Evidência:** [01-criacao-pix.png](https://github.com/luizcarvalho20/desafio-dio-api/blob/master/evidencias%20testes%20postman/Criar%20um%20Novo%20Pagamento%20(PIX).png)
 
 ### 2. Fluxo de Cartão de Crédito (Processamento e Confirmação)
 * **Cenário:** Criação de pagamento via CARD e posterior confirmação via endpoint de confirmação.
